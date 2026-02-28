@@ -31,7 +31,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_DIR = os.path.join(BASE_DIR, "data_store")
 
 embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-lite", temperature=0.1)
 
 # --- SYSTEM PROMPT ---
 SYSTEM_PROMPT = """You are the Odisha Mining Corporation (OMC) Document Intelligence Assistant.
