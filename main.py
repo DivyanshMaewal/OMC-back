@@ -4,9 +4,12 @@ import tempfile
 import uvicorn
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # LCEL Imports
-from langchain_ollama import OllamaEmbeddings, OllamaLLM
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain_community.vectorstores import Chroma
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -27,8 +30,8 @@ app.add_middleware(
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_DIR = os.path.join(BASE_DIR, "data_store")
 
-embeddings = OllamaEmbeddings(model="nomic-embed-text")
-llm = OllamaLLM(model="llama3.2:3b", temperature=0.1)
+embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
 
 # --- SYSTEM PROMPT ---
 SYSTEM_PROMPT = """You are the Odisha Mining Corporation (OMC) Document Intelligence Assistant.

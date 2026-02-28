@@ -1,13 +1,16 @@
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_ollama import OllamaEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 # --- CONFIGURATION ---
 SOURCE_DIR = "./source_documents"
 DB_DIR = "./data_store"
-EMBED_MODEL = "nomic-embed-text"
+EMBED_MODEL = "models/text-embedding-004"
 
 def run_bulk_ingest():
     # 1. Ensure the source directory exists
@@ -42,7 +45,7 @@ def run_bulk_ingest():
 
     # 4. Local Embedding & Vector Store
     print(f"🧠 Generating embeddings using {EMBED_MODEL}...")
-    embeddings = OllamaEmbeddings(model=EMBED_MODEL)
+    embeddings = GoogleGenerativeAIEmbeddings(model=EMBED_MODEL)
 
     vector_db = Chroma.from_documents(
         documents=chunks,
